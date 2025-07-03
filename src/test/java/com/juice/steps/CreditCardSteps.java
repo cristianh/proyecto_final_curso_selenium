@@ -19,6 +19,8 @@ public class CreditCardSteps {
     CreditCardPage creditcardpage = new CreditCardPage(driver);
     Faker fake = new Faker(new Locale("es","CO"));
 
+    private String cardnumber="";
+
 
     @Cuando("el usuario accede a la sección de información de pago")
     public void el_usuario_accede_a_la_sección_de_información_de_pago() {
@@ -41,6 +43,7 @@ public class CreditCardSteps {
         List<Map<String, String>> addresslist = dataTable.asMaps(String.class,String.class);
         creditcardpage.doAddCreditCard();
         for (Map<String,String> card : addresslist) {
+            cardnumber= card.get("cardnumber");
 
             creditcardpage.fillOutForm(
                     card.get("cardname"),
@@ -58,7 +61,7 @@ public class CreditCardSteps {
 
     @Entonces("el sistema debe mostrar un mensaje de confirmación y la tarjeta de crédito debe estar asociada a la cuenta del usuario")
     public void el_sistema_debe_mostrar_un_mensaje_de_confirmación_y_la_tarjeta_de_crédito_debe_estar_asociada_a_la_cuenta_del_usuario() {
-        assertTrue(creditcardpage.getMessage().contains("Your card ending with has been saved for your convenience."));
+        assertTrue(creditcardpage.getMessage().contains("Your card ending with " + cardnumber.substring(cardnumber.length() - 4) + " has been saved for your convenience."));
     }
 
 }
