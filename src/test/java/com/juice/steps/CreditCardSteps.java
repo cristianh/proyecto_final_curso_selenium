@@ -2,6 +2,7 @@ package com.juice.steps;
 
 import com.github.javafaker.Faker;
 import com.juice.factory.CreditCardPage;
+import com.juice.utils.Base;
 import com.juice.utils.DriverFactory;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Entonces;
@@ -27,29 +28,20 @@ public class CreditCardSteps {
         creditcardpage.navigateToCreditCardMenuPage();
     }
 
-    @Cuando("agrega una nueva tarjeta de crédito con detalles válidos")
-    public void agrega_una_nueva_tarjeta_de_crédito_con_detalles_válidos() {
-
-        creditcardpage.doAddCreditCard();
-        String cardName = "Mastercard";
-        String cardNumber = "5425233430109903";
-        String dateMoth = fake.business().creditCardExpiry();
-        String dateYear = "2080";
-        creditcardpage.fillOutForm(cardName,cardNumber,dateMoth,dateYear);
-    }
 
     @Cuando("agrega nuevas tarjetas de crédito con detalles válidos")
     public void agrega_nuevas_tarjeta_de_crédito_con_detalles_válidos(io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> addresslist = dataTable.asMaps(String.class,String.class);
-        creditcardpage.doAddCreditCard();
+
         for (Map<String,String> card : addresslist) {
-            cardnumber= card.get("cardnumber");
 
             creditcardpage.fillOutForm(
                     card.get("cardname"),
                     card.get("cardnumber"),
                     card.get("datemoth"),
                     card.get("dateyear"));
+
+            cardnumber= card.get("cardnumber");
             creditcardpage.doSubmitCreditCard();
         }
     }

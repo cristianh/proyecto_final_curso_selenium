@@ -15,7 +15,7 @@ public class Reader {
 		prop = new Properties();
 
 		try {
-			String propFilePath = System.getProperty("user.dir") + "/src/test/resources/config/config.properties";
+			String propFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
 			fileInputStream = new FileInputStream(propFilePath);
 			prop.load(fileInputStream);
 

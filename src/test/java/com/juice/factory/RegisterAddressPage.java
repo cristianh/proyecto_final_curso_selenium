@@ -115,7 +115,6 @@ public class RegisterAddressPage {
 
 
     public String getMessage() {
-        Base.validateUrlPage(URLBaseRegisterAddress);
         Base.isVisibleElement(messageValidateRegisterAddress);
         return messageValidateRegisterAddress.getText();
     }

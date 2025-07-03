@@ -71,22 +71,12 @@ public class CreditCardPage {
         menuItemAccountSaveAddressButton.click();
     }
 
-    public void doAddCreditCard() {
-        try {
-            Base.isVisibleElement(addCardButton);
-            Base.isEnabledClick(addCardButton);
-            addCardButton.click();
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error: "+e.getMessage(), e);
-        }
-
-    }
 
     public void fillOutForm(String cardName, String cardNumber, String dateMoth, String dateYear) {
-
-        Base.isVisibleElement(nameField,2770);
-        Base.isEnabledClick(nameField);
+        Base.isVisibleElement(addCardButton);
+        Base.isEnabledClick(addCardButton);
+        addCardButton.click();
+        Base.isVisibleElement(nameField,1400);
         nameField.sendKeys(cardName);
         cardNumberField.sendKeys(cardNumber);
         experyCardMonthField.click();
@@ -97,27 +87,22 @@ public class CreditCardPage {
     }
 
     public void doSubmitCreditCard() {
+        //Scroll
 
-
-        try {
-            // espera 3 mi-segundos
-            Thread.sleep(3000);
-            //Scroll
-            Base.scrollToElement(submitButton);
-            //Si el boton de guardar esta habilitado, guardamos la card
-            if (submitButton.isEnabled()) {
-                Base.isEnabledClick(submitButton);
-                submitButton.click();
-            }
-            else {
-                //ocultamos el formulario de Creditcards al ingresar todo.
-                Base.isEnabledClick(hiddenOptionsCardsButton);
-                hiddenOptionsCardsButton.click();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        Base.scrollToElement(submitButton);
+        //Si el boton de guardar esta habilitado, guardamos la card
+        if (submitButton.isEnabled()) {
+            Base.isEnabledClick(submitButton);
+            submitButton.click();
+            Base.isVisibleElement(addCardButton);
+            Base.isEnabledClick(addCardButton);
+            addCardButton.click();
         }
-
+        else {
+            //ocultamos el formulario de Creditcards al ingresar todo.
+            Base.isEnabledClick(hiddenOptionsCardsButton);
+            hiddenOptionsCardsButton.click();
+        }
     }
 
     public String getMessage() {
