@@ -1,16 +1,12 @@
 package com.juice.factory;
 
-import com.juice.utils.DriverFactory;
-import org.openqa.selenium.JavascriptExecutor;
+import com.juice.utils.Base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,8 +14,8 @@ import static com.juice.utils.Constants.URLBaseRegisterAddress;
 
 
 public class RegisterAddressPage {
-    public WebDriver driver;
 
+    public WebDriver driver;
 
     @FindBy(id = "navbarAccount")
     private WebElement menuAccountButton;
@@ -29,6 +25,9 @@ public class RegisterAddressPage {
 
     @FindBy(xpath = "//*[@id=\"mat-menu-panel-3\"]/div[1]/button[3]")
     private WebElement menuItemAccountSaveAddressButton;
+
+    @FindBy(xpath = "//h1[contains(text(),'Add New Address')]")
+    private WebElement titleRegisterAddressForm;
 
     //Object repository
     @FindBy(className = "btn-new-address")
@@ -64,9 +63,6 @@ public class RegisterAddressPage {
     @FindBy(css = "mat-row[role=\"row\"] > mat-cell:first-of-type")
     private List<WebElement> titlesAddressList;
 
-
-
-
     protected WebDriverWait wait;
 
     //constructor
@@ -76,29 +72,16 @@ public class RegisterAddressPage {
     }
 
     public void navigateRegisterAddressPage() {
-        try {
-            menuAccountButton.click();
-            // Crear acción de MouseOver
-            Actions actions = new Actions(driver);
-            actions.moveToElement(menuItemAccountButton).perform();
-            Thread.sleep(10);
-            menuItemAccountSaveAddressButton.click();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        menuAccountButton.click();
+        Base.overElements(menuItemAccountButton);
+        Base.isVisibleElement(menuItemAccountSaveAddressButton, 30);
+        menuItemAccountSaveAddressButton.click();
     }
 
 
     public void doRegisterAddress() {
-        try {
-            Thread.sleep(5500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(100));
-        wait.until(ExpectedConditions.visibilityOf(registerNewAddressButton));
+        Base.isVisibleElement(registerNewAddressButton, 4500);
         registerNewAddressButton.click();
-
     }
 
 
@@ -112,45 +95,28 @@ public class RegisterAddressPage {
             String state
 
     ) {
-
-
-            try {
-                Thread.sleep(100);
-                countryField.click();
-                countryField.sendKeys(country);
-                provinceNameField.sendKeys(province);
-                mobileNumberField.sendKeys(mobileNumber);
-                zipCodeField.sendKeys(zipCode);
-                addressField.sendKeys(address);
-                cityCodeField.sendKeys(cityCode);
-                stateField.sendKeys(state);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
+        Base.isVisibleElement(titleRegisterAddressForm, 13);
+        countryField.click();
+        countryField.sendKeys(country);
+        provinceNameField.sendKeys(province);
+        mobileNumberField.sendKeys(mobileNumber);
+        zipCodeField.sendKeys(zipCode);
+        addressField.sendKeys(address);
+        cityCodeField.sendKeys(cityCode);
+        stateField.sendKeys(state);
+        Base.isInVisibleElement(messageValidateRegisterAddress, 3000);
     }
 
     public void doSubmitAddress() {
-        try {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton);
-            Thread.sleep(2500);  // espera a que se acomode el scroll
-            submitButton.click();   // ahora intenta clic normal
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        Base.scrollToElement(submitButton);
+        Base.isVisibleElement(submitButton, 3);
+        submitButton.click();   // ahora intenta clic normal
     }
 
 
     public String getMessage() {
-        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(1));
-        driver.switchTo().defaultContent();
-
-        System.out.println("url"+ this.driver.getCurrentUrl());
-        // Esperar a que la URL pase al la pagina de registro y valide el mensaje
-        wait.until(ExpectedConditions.urlToBe(URLBaseRegisterAddress));
-        wait.until(ExpectedConditions.visibilityOf(messageValidateRegisterAddress));
-        System.out.println("Mensaje:"+ messageValidateRegisterAddress.getText());
+        Base.validateUrlPage(URLBaseRegisterAddress);
+        Base.isVisibleElement(messageValidateRegisterAddress);
         return messageValidateRegisterAddress.getText();
     }
 
@@ -162,8 +128,6 @@ public class RegisterAddressPage {
                 .collect(Collectors.toList());
         return actualTexts;
     }
-
-
 
 
 }

@@ -10,7 +10,8 @@ import org.openqa.selenium.WebDriver;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
+
+import static org.testng.Assert.assertTrue;
 
 public class CreditCardSteps {
 
@@ -26,7 +27,7 @@ public class CreditCardSteps {
 
     @Cuando("agrega una nueva tarjeta de crédito con detalles válidos")
     public void agrega_una_nueva_tarjeta_de_crédito_con_detalles_válidos() {
-        Random random = new Random();
+
         creditcardpage.doAddCreditCard();
         String cardName = "Mastercard";
         String cardNumber = "5425233430109903";
@@ -54,9 +55,10 @@ public class CreditCardSteps {
     public void guarda_la_nueva_tarjeta() {
         creditcardpage.doSubmitCreditCard();
     }
+
     @Entonces("el sistema debe mostrar un mensaje de confirmación y la tarjeta de crédito debe estar asociada a la cuenta del usuario")
     public void el_sistema_debe_mostrar_un_mensaje_de_confirmación_y_la_tarjeta_de_crédito_debe_estar_asociada_a_la_cuenta_del_usuario() {
-
+        assertTrue(creditcardpage.getMessage().contains("Your card ending with has been saved for your convenience."));
     }
 
 }

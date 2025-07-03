@@ -28,15 +28,16 @@ public class RegisterSteps {
 	public void el_usuario_completa_la_información_válida() {
 		//String pass = fake.internet().password();
 		//String email = fake.internet().emailAddress();
-		String secret = fake.random().toString();
 		String email = "pruebas@gmail.com";
 		String pass = "crusto2009";
+		String secret = fake.internet().uuid();
+
 		account.fillOutRegisterForm(fake.name().firstName(), fake.name().lastName(), email, pass, pass,secret);
 		System.out.println("Account has been created with Email:" + email + " and Password: " + pass);
 	}
 
-	@Cuando("el usuario hace clic en el boton de registrar")
-	public void el_usuario_hace_clic_en_el_boton_de_registrar() {
+	@Cuando("confirme la informacion con el boton de registrar")
+	public void confirme_la_informacion_con_el_boton_de_registrar() {
 		account.sendDataForNewAccount();
 	}
 

@@ -1,11 +1,10 @@
 package com.juice.factory;
 
+import com.juice.utils.Base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -60,19 +59,12 @@ public class CheckoutPage {
 
     public void goShoppingMenu() {
         shoppingCardMenuButton.click();
-
     }
 
     public void doSeleccion() {
         // Esperar hasta que el botón esté visible y clickable (más seguro)
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(shoppingButton));
-
-        // Usar Actions directamente sin sleep
-        new Actions(driver)
-                .moveToElement(button)
-                .click()
-                .perform();
+        Base.isEnabledClick(shoppingButton);
+        Base.overElementsClick(shoppingButton);
     }
 
     public void choiceOptionsAddress() {

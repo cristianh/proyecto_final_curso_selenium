@@ -1,14 +1,11 @@
 package com.juice.factory;
 
-import com.juice.utils.DriverFactory;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import com.juice.utils.Base;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 import static com.juice.utils.Constants.URLBaseLogin;
 
@@ -63,57 +60,43 @@ public class RegisterPage {
 
     //methods
     public void goToRegisterPage() {
+        //Reutilizamos el menu
+        Base.isEnabledClick(menuAccountButton);
+        menuAccountButton.click();
+        Base.isVisibleElement(menuItemLoginAccountButton);
+        Base.overElementsClick(menuItemLoginAccountButton);
+        Base.isEnabledClick(registerLink);
+        registerLink.click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        // Hacer clic en el botón del menú de cuenta
-        wait.until(ExpectedConditions.elementToBeClickable(menuAccountButton)).click();
-
-        // Esperar que el ítem del menú login esté visible y hacer hover
-        wait.until(ExpectedConditions.visibilityOf(menuItemLoginAccountButton));
-        new Actions(driver)
-                .moveToElement(menuItemLoginAccountButton)
-                .click()
-                .perform();
-
-        // Esperar que el link de registro esté clickeable y hacer clic
-        wait.until(ExpectedConditions.elementToBeClickable(registerLink)).click();
     }
 
 
     public void fillOutRegisterForm(String fname, String lname, String email, String pass, String repass, String secret) {
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-
+        //llenamos el formulario de registro
         emailField.sendKeys(email);
         passwordField.sendKeys(pass);
         repasswordField.sendKeys(repass);
 
-        // Esperar que el dropdown esté clickable y hacer clic
-        wait.until(ExpectedConditions.elementToBeClickable(selectSecurityQuestion)).click();
-
-        // Esperar que la opción esté presente y visible
-        wait.until(ExpectedConditions.visibilityOf(opctionSelectSecurityQuestion));
-
-        // Scroll al elemento (si es necesario)
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", opctionSelectSecurityQuestion);
-
-        // Esperar que sea clickable y hacer clic
-        wait.until(ExpectedConditions.elementToBeClickable(opctionSelectSecurityQuestion)).click();
-
+        //Validamos los elementos en la pagina.
+        // Esperar que el botón sea clickable
+        Base.isEnabledClick(selectSecurityQuestion);
+        selectSecurityQuestion.click();
+        Base.isVisibleElement(opctionSelectSecurityQuestion);
+        // Esperar que el botón sea clickable
+        Base.isEnabledClick(opctionSelectSecurityQuestion);
+        opctionSelectSecurityQuestion.click();
+        //Scrolling al elemento
+        Base.scrollToElement(opctionSelectSecurityQuestion);
         // Ingresar la respuesta
         securityAnswerField.sendKeys(secret);
     }
 
     public void sendDataForNewAccount() {
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        // Scroll al botón (opcional si ya está visible, pero puede ayudar en algunos casos)
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", registerButton);
-
+        Base.scrollToElement(registerButton);
         // Esperar que el botón sea clickable
-        wait.until(ExpectedConditions.elementToBeClickable(registerButton)).click();
+        Base.isEnabledClick(registerButton);
+        registerButton.click();
     }
 
     public boolean isRegisterSuccessPageDisplayed() {
@@ -127,18 +110,9 @@ public class RegisterPage {
 
 
     public String getMessage() {
-        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(1));
-        driver.switchTo().defaultContent();
-
-        System.out.println("url" + this.driver.getCurrentUrl());
         // Esperar a que la URL sea exactamente una
-        wait.until(ExpectedConditions.urlToBe(URLBaseLogin));
-        wait.until(ExpectedConditions.visibilityOf(messageText));
-
-        // Esperar a que la URL sea exactamente una
-        wait.until(ExpectedConditions.visibilityOf(messageText));
-
-        System.out.println("Mensaje" + messageText.getText());
+        Base.validateUrlPage(URLBaseLogin);
+        Base.isVisibleElement(messageText);
         return messageText.getText();
     }
 

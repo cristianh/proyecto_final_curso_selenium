@@ -32,10 +32,12 @@ public class CheckoutSteps {
 	public void el_usuario_ha_seleccionado_un_método_de_pago_válido() {
 		checkoutpage.choiceOptionsCardPay();
 	}
+
 	@Cuando("el usuario confirma la compra")
 	public void el_usuario_confirma_la_compra() {
 		checkoutpage.doConfirmPay();
 	}
+
 	@Entonces("el usuario debe recibir una confirmación de pedido {string}")
 	public void el_usuario_debe_recibir_una_confirmación_de_pedido(String message) {
 		Assert.assertEquals(checkoutpage.getMessage(),message);

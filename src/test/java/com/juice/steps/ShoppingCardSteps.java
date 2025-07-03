@@ -7,7 +7,6 @@ import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Entonces;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -55,12 +54,11 @@ public class ShoppingCardSteps {
     @Entonces("el carrito debe mostrar {string} y el total debe ser actualizado correctamente")
     public void el_carrito_debe_mostrar_y_el_total_debe_ser_actualizado_correctamente(String numeroproductos) {
         shoppingpage.doGoShoppingOptions();
-
         elementsList.add("banana");
         elementsList.add("apple");
         elementsList.add("T-Shirt");
         List<WebElement> listproducsPageShopping = shoppingpage.countElementsToShoppingCard();
-        Assert.assertEquals(numeroproductos,listproducsPageShopping.size());
+        Assert.assertEquals(Integer.parseInt(numeroproductos),Integer.parseInt(String.valueOf(listproducsPageShopping.size())));
         for (int i = 0; i < listproducsPageShopping.size(); i++) {
             Assert.assertTrue(listproducsPageShopping.get(i).getText().toLowerCase().contains(elementsList.get(i).toLowerCase()),"Expected product to contain: " + elementsList.get(i) + " but was: " + listproducsPageShopping.get(i).getText());
         }

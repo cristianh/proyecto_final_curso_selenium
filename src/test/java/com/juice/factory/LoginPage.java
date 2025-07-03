@@ -1,9 +1,9 @@
 package com.juice.factory;
 
+import com.juice.utils.Base;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -44,6 +44,7 @@ public class LoginPage {
     // constructor with PageFactory for initiate all the page objects
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        //Espera el inicio
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
@@ -51,13 +52,10 @@ public class LoginPage {
     public void navigateToLoginPage() {
         try {
             menuAccountButton.click();
-            // Crear acción de MouseOver
-            Actions actions = new Actions(driver);
-            actions.moveToElement(menuItemLoginAccountButton).perform();
+            Base.overElements(menuItemLoginAccountButton);
             menuItemLoginAccountButton.click();
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al hacer clic en el menú de cuenta o login", e);
         }
     }
 

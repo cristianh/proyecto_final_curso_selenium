@@ -1,6 +1,6 @@
 package com.juice.factory;
 
-import com.juice.utils.DriverFactory;
+import com.juice.utils.Base;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -20,10 +20,10 @@ public class ShoppingPage {
     private WebDriver driver;
 
     //Object repository
-    @FindBy(id="searchQuery")
+    @FindBy(id = "searchQuery")
     private WebElement findQueryButton;
 
-    @FindBy(xpath="//input[@type='text']")
+    @FindBy(xpath = "//input[@type='text']")
     private WebElement findQueryField;
 
     @FindBy(xpath = "(//button[@aria-label='Add to Basket'])[1]")
@@ -37,7 +37,6 @@ public class ShoppingPage {
 
     @FindBy(xpath = "//h1[contains(text(), 'Your Basket')]")
     private WebElement titlePageShoppingCard;
-
 
 
     @FindBys(
@@ -65,58 +64,35 @@ public class ShoppingPage {
 
     public void findProduct(String productoFind) {
 
-        try {
-            findQueryButton.click();
-            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(1));
-
-            // Esperar a que la URL sea exactamente una
-            boolean isVisible = wait.until(ExpectedConditions.visibilityOf(findQueryField)).isDisplayed();
-            if (isVisible) {
-
-                findQueryField.click();
-                findQueryField.clear();
-                findQueryField.sendKeys(productoFind);
-                findQueryField.sendKeys(Keys.ENTER);
-                System.out.println("agrego producto: "+ productoFind);
-                Thread.sleep(1100);
-                findQueryField.click();
-                findQueryField.clear();
-            }
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Base.isEnabledClick(findQueryButton);
+        findQueryButton.click();
+        Base.isVisibleElement(findQueryField);
+        findQueryField.click();
+        findQueryField.clear();
+        findQueryField.sendKeys(productoFind);
+        findQueryField.sendKeys(Keys.ENTER);
+        System.out.println("agrego producto: " + productoFind);
+        findQueryField.click();
+        findQueryField.clear();
     }
 
     public void goAddShoppingOptions() {
-        try {
-            addToCardShoppindButton.click();
-            Thread.sleep(1100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Base.isEnabledClick(addToCardShoppindButton);
+        addToCardShoppindButton.click();
     }
 
 
-    public void doGoShoppingOptions(){
-        try {
-            shoppingCardMenuButton.click();
-            Thread.sleep(1100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void doGoShoppingOptions() {
+        Base.isEnabledClick(shoppingCardMenuButton);
+        shoppingCardMenuButton.click();
     }
 
-    public void doGoShoppingCard(){
-        try {
-            shoppingCardButton.click();
-            Thread.sleep(1100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void doGoShoppingCard() {
+        Base.isEnabledClick(shoppingCardButton);
+        shoppingCardButton.click();
     }
 
-    public void clickRandomProduct(){
+    public void clickRandomProduct() {
         // Verifica que la lista no esté vacía
         if (!productButtonPageShopping.isEmpty()) {
             Random random = new Random();
@@ -127,21 +103,14 @@ public class ShoppingPage {
         }
     }
 
-    public List<WebElement> countElementsToShoppingCard(){
-        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(1));
-
-        // Esperar a que la URL sea exactamente una
-        wait.until(ExpectedConditions.visibilityOf(titlePageShoppingCard)).isDisplayed();
+    public List<WebElement> countElementsToShoppingCard() {
+        Base.isVisibleElement(titlePageShoppingCard);
         return elementsToShoppingCard;
     }
 
     public boolean isMessageVisible() {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(messageConfirmAddCardProduct));
-            return messageConfirmAddCardProduct.isDisplayed();
-        } catch (TimeoutException e) {
-            return false;
-        }
+        Base.isVisibleElement(messageConfirmAddCardProduct);
+        return messageConfirmAddCardProduct.isDisplayed();
     }
 
     public boolean isNotVisible() {
@@ -152,6 +121,4 @@ public class ShoppingPage {
         }
     }
 
-
-    // actions or functions that require the automation process
 }

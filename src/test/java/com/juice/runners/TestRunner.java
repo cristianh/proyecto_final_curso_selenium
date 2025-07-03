@@ -15,7 +15,7 @@ import io.cucumber.testng.CucumberOptions;
 				"rerun:target/failedrerun.txt",
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 				"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-		tags = "@Checkout02",
+		tags = "@04_CreditCardSuccessList",
 		monochrome = false,
 		dryRun = false,
 		publish = true
@@ -24,12 +24,13 @@ import io.cucumber.testng.CucumberOptions;
 public class TestRunner extends AbstractTestNGCucumberTests {
 	//Orden de ejecucion
 	/*
-	@RegisterSuccess01
-	@LoginPageSuccess02
-	@RegisterAddressList03
-	@CreditCardSuccessListO4
-	@EndToEnd
-	@Checkout01
-	@ConfirmPageShopping
+	@01_RegisterSuccess
+	@02_LoginPageSuccess
+	@03_RegisterAddressList
+	@O4_CreditCardSuccessList
+	@05_Checkout
+	@06_ConfirmPageShopping
+	@07_CheckoutRandom
+	@08_CheckoutHistory
 	 */
 }

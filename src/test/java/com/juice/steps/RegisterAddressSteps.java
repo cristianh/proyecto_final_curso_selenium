@@ -47,6 +47,7 @@ public class RegisterAddressSteps {
 
         List<Map<String, String>> addresslist = dataTable.asMaps(String.class,String.class);
 
+
         for (Map<String,String> addr : addresslist){
             city = addr.get("city");
             expected.add(addr.get("province"));
@@ -60,7 +61,11 @@ public class RegisterAddressSteps {
                     addr.get("city"),
                     addr.get("state")
             );
+
+
             registeraddress.doSubmitAddress();
+
+
             //Assert.assertTrue(registeraddress.getMessage().contains("The address at " + city + " has been successfully added to your addresses."));
         }
         System.out.println(expected);

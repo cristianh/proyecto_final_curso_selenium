@@ -1,14 +1,11 @@
 package com.juice.factory;
 
-import com.juice.utils.DriverFactory;
-import org.openqa.selenium.JavascriptExecutor;
+import com.juice.utils.Base;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -23,10 +20,11 @@ public class CreditCardPage {
     @FindBy(xpath = "(//*[@id=\"mat-menu-panel-0\"]//div)[3]")
     private WebElement menuItemAccountButton;
 
-    @FindBy(xpath = "//*[@id=\"mat-menu-panel-3\"]/div[1]/button[4]")
+    @FindBy(xpath = "//*[contains(text(), 'My Payment Options')]")
     private WebElement menuItemAccountSaveAddressButton;
 
-    @FindBy(xpath = " //*[contains(text(), 'Add new card')]")
+
+    @FindBy(xpath = "//*[contains(text(), 'Add new card')]")
     private WebElement addCardButton;
 
     //Object repository
@@ -39,14 +37,19 @@ public class CreditCardPage {
     @FindBy(xpath = "(//select)[1]")
     private WebElement experyCardMonthField;
 
-    @FindBy(xpath  = "(//select)[2]")
+    @FindBy(xpath = "(//select)[2]")
     private WebElement experyCardYearField;
 
-    @FindBy(id  = "mat-expansion-panel-header-0")
+    @FindBy(id = "mat-expansion-panel-header-0")
     private WebElement hiddenOptionsCardsButton;
 
     @FindBy(id = "submitButton")
     private WebElement submitButton;
+
+    @FindBy(xpath = "//*[contains(text(),'Your card ending with') and contains(text(),'has been saved for your convenience.')]")
+    private WebElement messageText;
+
+
 
     protected WebDriverWait wait;
 
@@ -58,30 +61,32 @@ public class CreditCardPage {
     }
 
     public void navigateToCreditCardMenuPage() {
-        try {
-            menuAccountButton.click();
-            // Crear acción de MouseOver
-            Actions actions = new Actions(driver);
-            actions.moveToElement(menuItemAccountButton).perform();
-            Thread.sleep(10);
-            menuItemAccountSaveAddressButton.click();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Base.isEnabledClick(menuAccountButton);
+        menuAccountButton.click();
+        Base.overElementsClick(menuItemAccountButton);
+        //menuItemAccountButton.click();
+        Base.isEnabledClick(menuItemAccountSaveAddressButton);
+        Base.isVisibleElement(menuItemAccountSaveAddressButton,5000);
+        Base.overElements(menuItemAccountSaveAddressButton);
+        menuItemAccountSaveAddressButton.click();
     }
 
     public void doAddCreditCard() {
         try {
-            Thread.sleep(2500);
-            WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(100));
-            wait.until(ExpectedConditions.visibilityOf(addCardButton));
+            Base.isVisibleElement(addCardButton);
+            Base.isEnabledClick(addCardButton);
             addCardButton.click();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error: "+e.getMessage(), e);
         }
+
     }
 
-    public void fillOutForm(String cardName, String cardNumber, String dateMoth,String dateYear) {
+    public void fillOutForm(String cardName, String cardNumber, String dateMoth, String dateYear) {
+
+        Base.isVisibleElement(nameField,2770);
+        Base.isEnabledClick(nameField);
         nameField.sendKeys(cardName);
         cardNumberField.sendKeys(cardNumber);
         experyCardMonthField.click();
@@ -92,20 +97,33 @@ public class CreditCardPage {
     }
 
     public void doSubmitCreditCard() {
+
+
         try {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton);
-            Thread.sleep(8500);  // espera a que se acomode el scroll
-            //Si el boton de guardar esta habilitad, guardamos la card
-            if(submitButton.isEnabled()){
+            // espera 3 mi-segundos
+            Thread.sleep(3000);
+            //Scroll
+            Base.scrollToElement(submitButton);
+            //Si el boton de guardar esta habilitado, guardamos la card
+            if (submitButton.isEnabled()) {
+                Base.isEnabledClick(submitButton);
                 submitButton.click();
-            }else{
-                //ocultamos el formulario de Creditcards
+            }
+            else {
+                //ocultamos el formulario de Creditcards al ingresar todo.
+                Base.isEnabledClick(hiddenOptionsCardsButton);
                 hiddenOptionsCardsButton.click();
             }
-
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+
+    }
+
+    public String getMessage() {
+        // Esperar a que la URL sea exactamente una
+        Base.isVisibleElement(messageText);
+        return messageText.getText();
     }
 
 }
