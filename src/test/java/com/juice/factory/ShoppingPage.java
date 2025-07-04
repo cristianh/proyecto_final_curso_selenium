@@ -35,7 +35,7 @@ public class ShoppingPage {
     @FindBy(id = "checkoutButton")
     private WebElement shoppingCardButton;
 
-    @FindBy(xpath = "//h1[contains(text(), 'Your Basket')]")
+    @FindBy(xpath = "//h1[contains(text(), 'Your Basket ')]")
     private WebElement titlePageShoppingCard;
 
 
@@ -49,7 +49,7 @@ public class ShoppingPage {
     )
     private List<WebElement> productButtonPageShopping;
 
-    @FindBy(xpath = "//*[contains(text(),'Placed') and contains(text(),'into basket')]")
+    @FindBy(xpath = "//*[contains(text(),'Placed') and contains(text(),'into basket.')]")
     private WebElement messageConfirmAddCardProduct;
 
     protected WebDriverWait wait;
@@ -92,25 +92,30 @@ public class ShoppingPage {
         shoppingCardButton.click();
     }
 
-    public void clickRandomProduct() {
+    public WebElement clickRandomProduct() {
         // Verifica que la lista no esté vacía
+        WebElement elementoSeleccionado = null;
         if (!productButtonPageShopping.isEmpty()) {
             Random random = new Random();
             int indexAleatorio = random.nextInt(productButtonPageShopping.size());
-            WebElement elementoSeleccionado = productButtonPageShopping.get(indexAleatorio);
+            elementoSeleccionado = productButtonPageShopping.get(indexAleatorio);
             // Haz clic o realiza alguna acción
-            elementoSeleccionado.click();
+            Base.isEnabledClick(elementoSeleccionado);
         }
+        return elementoSeleccionado;
     }
 
     public List<WebElement> countElementsToShoppingCard() {
         Base.isVisibleElement(titlePageShoppingCard);
+        System.out.println("Titulo: "+ titlePageShoppingCard.getText());
         return elementsToShoppingCard;
     }
 
-    public boolean isMessageVisible() {
+
+    public String getMessage() {
+        // Esperar a que la URL sea exactamente una
         Base.isVisibleElement(messageConfirmAddCardProduct);
-        return messageConfirmAddCardProduct.isDisplayed();
+        return messageConfirmAddCardProduct.getText();
     }
 
     public boolean isNotVisible() {

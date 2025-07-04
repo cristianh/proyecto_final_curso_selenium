@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static org.testng.Assert.assertTrue;
+
 public class ShoppingCardSteps {
 
     WebDriver driver = DriverFactory.getDriver();
@@ -41,9 +43,12 @@ public class ShoppingCardSteps {
 
 
         for (int i = 0; i < steps; i++) {
-            shoppingpage.clickRandomProduct();
-            Assert.assertTrue(shoppingpage.isMessageVisible());
-            System.out.println(shoppingpage.isNotVisible());
+            WebElement  element = shoppingpage.clickRandomProduct();
+            element.click();
+            assertTrue(
+                    shoppingpage.getMessage().contains("Placed") && shoppingpage.getMessage().contains("into basket"),
+                    "El mensaje no contiene ambas partes esperadas"
+            );
             if(!shoppingpage.isNotVisible()){
                 continue;
             }

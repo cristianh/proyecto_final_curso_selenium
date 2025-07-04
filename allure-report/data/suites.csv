@@ -1,0 +1,29 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"  Como visitante del sitio web de comercio electrónico
+  Quiero crear una cuenta
+  Para comprar productos","12153","Registro exitoso con informacion valida","","Tue Jul 01 09:44:29 COT 2025","passed","Tue Jul 01 09:44:41 COT 2025","","Nuevo registro","Registro exitoso con informacion valida",""
+"  //Redactar
+  Como usuario del sitio web de comercio electrónico
+  quiero hacer una compra
+  Para obtener el producto que necesito","11019","Proceso de pago exitoso","","Tue Jul 01 09:56:38 COT 2025","passed","Tue Jul 01 09:56:49 COT 2025","","Proceso de pago","Proceso de pago exitoso",""
+"  Como usuario del sitio web de comercio electrónico
+  Quiero poder ver y actualizar los datos de mi cuenta
+  Para que mis datos de pedido y entrega sean correctos","6365",": Iniciar sesión con credenciales ""correctas""","","Tue Jul 01 09:44:42 COT 2025","passed","Tue Jul 01 09:44:48 COT 2025","","Verificar Login",": Iniciar sesión con credenciales ""correctas""",""
+"  Como usuario del sitio web de comercio electrónico
+  quiero hacer una compra
+  Para obtener el producto que necesito","9837","Verificación de historial de pedidos","","Tue Jul 01 10:36:59 COT 2025","passed","Tue Jul 01 10:37:09 COT 2025","","Crear una orden","Verificación de historial de pedidos",""
+"  Como usuario del sitio web de comercio electrónico
+  quiero hacer una compra
+  Para obtener el producto que necesito","19555","Agregar productos al carrito","","Tue Jul 01 09:55:47 COT 2025","passed","Tue Jul 01 09:56:07 COT 2025","","Crear una orden","Agregar productos al carrito",""
+"  Como usuario del sitio web de comercio electrónico
+  Quiero poder ver y actualizar los datos de mi cuenta
+  Para que mis datos de pedido y entrega sean correctos","7880",": Iniciar sesión con credenciales ""incorrectas""","","Tue Jul 01 09:44:48 COT 2025","passed","Tue Jul 01 09:44:56 COT 2025","","Verificar Login",": Iniciar sesión con credenciales ""incorrectas""",""
+"  Como usuario del sitio web de comercio electrónico
+  quiero hacer una compra
+  Para obtener el producto que necesito","28622","Agregar productos al carrito de manera aleatoria","","Tue Jul 01 09:48:28 COT 2025","failed","Tue Jul 01 09:48:57 COT 2025","","Crear una orden","Agregar productos al carrito de manera aleatoria",""
+"  Como visitante del sitio web de comercio electrónico
+  Quiero poder registrar mi direccion de envio
+  Para recibir mi pedido en mi domicilio","31867","Registro exitoso direccion de envio","","Tue Jul 01 09:47:18 COT 2025","passed","Tue Jul 01 09:47:50 COT 2025","","Nuevo registro direccion","Registro exitoso direccion de envio",""
+"  Como visitante del sitio web de comercio electrónico
+  Quiero poder registrar mi direccion de envio
+  Para recibir mi pedido en mi domicilio","40170","Agregar Tarjeta de Crédito","","Tue Jul 01 09:46:37 COT 2025","passed","Tue Jul 01 09:47:18 COT 2025","","Nuevo registro direccion","Agregar Tarjeta de Crédito",""
