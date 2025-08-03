@@ -6,6 +6,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
 		features = "src/test/resources/features",
 		glue = {"com.juice","com.hooks"},
+		snippets = CucumberOptions.SnippetType.CAMELCASE,
 		plugin = {"pretty",
 				"summary",
 				"html:target/cucumber-reports/html-report.html",
