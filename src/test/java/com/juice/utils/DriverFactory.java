@@ -28,9 +28,11 @@ public class DriverFactory {
                 // 🔐 Configuraciones de seguridad directamente
                 options.addArguments("--ignore-certificate-errors");
                 options.addArguments("--allow-insecure-localhost");
-                //options.addArguments("--headless");
+                options.addArguments("--headless");
                 options.addArguments("--start-maximized");
                 options.addArguments("--disable-infobars");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--remote-allow-origins=*");
                 //Paso 2: instanciar las variables
                 // instanciamos el navegador a utilizar.
